@@ -8,9 +8,9 @@ find_package(CUDA)
 
 set(
 	CUDA_NVCC_FLAGS
-	${CUDA_NVCC_FLAGS}; 
+	${CUDA_NVCC_FLAGS} -std=c++11; 
     -O3 
-	-gencode arch=compute_53,code=sm_53  #tegra tx1 
+	-gencode arch=compute_60,code=sm_60  #tegra tx1 
         -gencode arch=compute_61,code=sm_61  #gtx 1060
 	-gencode arch=compute_62,code=sm_62  #tegra tx2
 )
@@ -43,8 +43,8 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${PROJECT_OUTPUT_DIR}/lib)
 # build C/C++ interface
 include_directories(${PROJECT_INCLUDE_DIR} ${GIE_PATH}/include)
 include_directories(${PROJECT_INCLUDE_DIR} 
-	/home/chen/caffe/include 
-	/home/chen/caffe/build/include 
+	/opt/caffe/include 
+	/opt/caffe/build/include 
 )
 
 
@@ -53,11 +53,11 @@ file(GLOB inferenceIncludes src/*.h )
 
 cuda_add_library(yolov3-plugin SHARED ${inferenceSources})
 target_link_libraries(yolov3-plugin 
-	/home/chen/caffe/build/lib/libcaffe.so  
-	/usr/lib/x86_64-linux-gnu/libglog.so  
-	/usr/lib/x86_64-linux-gnu/libgflags.so.2
+	/opt/caffe/.build_release/lib/libcaffe.so  
+	/home/caros/secure_upgrade/depend_lib/libgflags.so  
+	/usr/local/lib/libglog.so
     	/usr/lib/x86_64-linux-gnu/libboost_system.so  
-	/usr/lib/x86_64-linux-gnu/libGLEW.so.1.13  
+	/usr/lib/libGLEW.so  
 )
 
 
