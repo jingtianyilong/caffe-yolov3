@@ -52,7 +52,6 @@ file(GLOB inferenceIncludes src/*.h )
 
 cuda_add_library(yolov3-plugin SHARED ${inferenceSources})
 target_link_libraries(yolov3-plugin 
-	/usr/lib/libprotobuf.so
 	/apollo/caffe/.build_release/lib/libcaffe.so  
 	/home/caros/secure_upgrade/depend_lib/libgflags.so  
 	/usr/local/lib/libglog.so
