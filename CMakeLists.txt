@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8)
-project(caffe-yolov3)
+project(caffe_yolov3)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")	# -std=gcc++11
 
 # setup CUDA
@@ -10,7 +10,7 @@ set(
 	${CUDA_NVCC_FLAGS} -std=c++11; 
     -O3 
 	-gencode arch=compute_60,code=sm_60  #tegra tx1 
-        -gencode arch=compute_61,code=sm_61  #gtx 1060
+    -gencode arch=compute_61,code=sm_61  #gtx 1060
 	-gencode arch=compute_62,code=sm_62  #tegra tx2
 )
 
@@ -46,12 +46,31 @@ include_directories(${PROJECT_INCLUDE_DIR}
 	/apollo/caffe/build/include 
 )
 
+find_package(OpenCV REQUIRED)
+find_package(catkin REQUIRED COMPONENTS
+    cv_bridge
+    roscpp
+    sensor_msgs
+	std_msgs
+	image_transport
+)
+
+catkin_package(
+    CATKIN_DEPENDS roscpp sensor_msgs image_transport
+)
+
+include_directories(
+  ${catkin_INCLUDE_DIRS}
+)
 
 file(GLOB inferenceSources src/*.cpp src/*.cu )
 file(GLOB inferenceIncludes src/*.h )
 
 cuda_add_library(yolov3-plugin SHARED ${inferenceSources})
 target_link_libraries(yolov3-plugin 
+	${catkin_LIBRARIES} 
+	${OpenCV_LIBS} 
+	/home/caros/secure_upgrade/depend_lib/libgtest.so
 	/usr/lib/libprotobuf.so
 	/apollo/caffe/.build_release/lib/libcaffe.so  
 	/home/caros/secure_upgrade/depend_lib/libgflags.so  
