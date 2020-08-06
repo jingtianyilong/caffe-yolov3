@@ -22,10 +22,10 @@ int max_index(float *a, int n)
 
  Detector::Detector(std::string prototxt,std::string caffemodel,int gpu_id){
      // set device
-    Caffe::set_mode(Caffe::GPU);
+    YoloCaffe::set_mode(YoloCaffe::GPU);
 
     if (gpu_id >= 0){
-        Caffe::SetDevice(gpu_id);
+        YoloCaffe::SetDevice(gpu_id);
         LOG(INFO) << "Using GPU #" << gpu_id;
     }
     else{

@@ -8,13 +8,13 @@
 #include <iostream>
 #include <glog/logging.h>
 
-#include <caffe/caffe.hpp>
+#include <yolo_caffe/yolo_caffe.hpp>
 
 
 #include "image_opencv.h"
 #include "yolo_layer.h"
 
-using namespace caffe;
+using namespace yolo_caffe;
 // using namespace cv;
 
 

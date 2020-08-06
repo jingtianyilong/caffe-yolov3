@@ -72,7 +72,7 @@ target_link_libraries(yolov3-plugin
 	${OpenCV_LIBS} 
 	/home/caros/secure_upgrade/depend_lib/libgtest.so
 	/usr/lib/libprotobuf.so
-	/apollo/caffe/.build_release/lib/libcaffe.so  
+	/apollo/caffe/.build_release/lib/libyolo_caffe.so  
 	/home/caros/secure_upgrade/depend_lib/libgflags.so  
 	/usr/local/lib/libglog.so
     	/usr/lib/x86_64-linux-gnu/libboost_system.so  

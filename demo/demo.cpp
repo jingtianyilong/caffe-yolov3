@@ -478,6 +478,7 @@ void imageCallback(const sensor_msgs::ImageConstPtr& msg)
   {
     cv::Mat img;
     img = cv::Mat(msg->height, msg->width, CV_8UC3);
+    std::cout << "img_height" << msg->height << std::endl; 
     int pixel_num = msg->width * msg->height;
     unsigned char *yuv = (unsigned char *)&(msg->data[0]);
     yuyv2bgr(yuv, img.data, pixel_num);    
@@ -486,6 +487,7 @@ void imageCallback(const sensor_msgs::ImageConstPtr& msg)
     int classes = 80;
     int width = std::max(1.0f, img.rows * .005f);
     //show detection results
+    std::cout << "No. of bbox: " << bbox_vec.size() << std::endl;
     for (int i=0;i<bbox_vec.size();++i){
         bbox_t b = bbox_vec[i];
         if (b.prob >= 0.45){
@@ -525,11 +527,7 @@ void imageCallback(const sensor_msgs::ImageConstPtr& msg)
         
     }
     cv::imshow("view", img);
-    int c = cv::waitKey(1);
-    if ((char)c == 27) {    
-      cv::destroyWindow("view");
-      signal(SIGINT,sigHandler);
-}
+    cv::waitKey(300);
   }
   catch (cv_bridge::Exception& e)
   {
@@ -547,6 +545,5 @@ int main(int argc, char **argv)
   image_transport::ImageTransport it(nh);
   image_transport::Subscriber sub = it.subscribe("/apollo/sensor/camera/obstacle/front_6mm", 1, imageCallback);
   ros::spin();
-  cv::destroyAllWindows();
   return 0;
 }
